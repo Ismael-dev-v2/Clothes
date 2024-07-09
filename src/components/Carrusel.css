@@ -1,0 +1,24 @@
+.Carrusel {
+  height: 550px;
+  width: 50vh;
+  object-fit: cover;
+  margin: auto;
+  z-index: -10000;
+  aspect-ratio: 1/1;
+}
+
+
+.img{
+    height: 100%;
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+}
+
+.thumbs {
+  display: none;
+}
+
+.carousel-status {
+  display: none;
+}
