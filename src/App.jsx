@@ -5,7 +5,7 @@ import Productos from './components/Productos';
 import Stock from './components/Productos.jsx';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faBagShopping, faTrash,} from '@fortawesome/free-solid-svg-icons'
+import {faCartShopping, faTrash,} from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -24,11 +24,22 @@ function App() {
 
   const [isActive, setIsActive] = useState(false);
   const [carrito, setCarrito] = useState([]);
+  const [active, setIsActive2] = useState(false);
+  const [activeProducts, setActiveProducts] = useState([]);
 
 
   const addToCart = (id) => {
     let nuevoProducto = Productos.find((producto) => producto.id === id);
     setCarrito([...carrito, nuevoProducto]);
+    // Activa la animación para el producto agregado
+    setActiveProducts([...activeProducts, id]);
+
+    // Eliminar la clase 'active' después de 1 segundo
+    setTimeout(() => {
+        setActiveProducts((prevActiveProducts) =>
+            prevActiveProducts.filter((productId) => productId !== id)
+        );
+    }, 1000); // 1 segundo
   };
 
 
@@ -49,12 +60,12 @@ function App() {
     
  
  
-  // useEffect(() => {
-  //   const savedProductos = localStorage.getItem('productos');
-  //     if (savedProductos) {
-  //   setCarrito(JSON.parse(savedProductos));
-  //     }
-  //   }, []);
+  useEffect(() => {
+    const savedProductos = localStorage.getItem('productos');
+      if (savedProductos) {
+    setCarrito(JSON.parse(savedProductos));
+      }
+    }, []);
 
   useEffect(() => {
     localStorage.setItem('productos', JSON.stringify(carrito));
@@ -73,7 +84,7 @@ function App() {
     <div>
       <header className="navbar">
         <button className='z-50 absolute text-3xl w-8 h-8 bolsa' onClick={() => setIsActive(!isActive)}>
-          <FontAwesomeIcon icon={faBagShopping}/>
+          <FontAwesomeIcon icon={faCartShopping}/>
         </button>
       </header>
       <div onChange={handleClassChange} className={`hidden-cart ${isActive ? 'active' : ''}`}>
@@ -102,10 +113,10 @@ function App() {
         filterCategory={filterCategory}
         Productos={Productos}
       />
-      <Stock 
-      productos={Productos} 
+      <Stock
       filteredProductos={filteredProductos} 
       addToCart={addToCart}
+      activeProducts={activeProducts}
       />
     </div>
   );
