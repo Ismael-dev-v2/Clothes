@@ -24,7 +24,6 @@ function App() {
 
   const [isActive, setIsActive] = useState(false);
   const [carrito, setCarrito] = useState([]);
-  const [active, setIsActive2] = useState(false);
   const [activeProducts, setActiveProducts] = useState([]);
 
 
