@@ -1,28 +1,53 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
-import './Carrusel.css'
+import "./Carrusel.css";
+import { useState, useEffect, useRef } from "react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Productos from "./Productos";
 
-class DemoCarousel extends Component {
-    render() {
-        return (
-            <Carousel>
-                <div className='Carrusel'>
-                    <img className='img' src="https://nikearprod.vtexassets.com/arquivos/ids/587695-800-800?v=638168493693970000&width=800&height=800&aspect=true" />
-                    <p className="legend">Nike Therma-FIT</p>
-                </div>
-                <div className='Carrusel'>
-                    <img className='img' src="https://nikearprod.vtexassets.com/arquivos/ids/210132-800-800?v=638098199186430000&width=800&height=800&aspect=true" />
-                    <p className="legend">Nike Sportswear Air</p>
-                </div>
-                <div className='Carrusel'>
-                    <img className='img' src="https://nikearprod.vtexassets.com/arquivos/ids/210190-800-800?v=638098200003770000&width=800&height=800&aspect=true" />
-                    <p className="legend">Nike Sportswear Circa</p>
-                </div>
-            </Carousel>
-        );
+const DemoCarousel = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const carouselRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.5 }
+    );
+
+    if (carouselRef.current) {
+      observer.observe(carouselRef.current);
     }
+
+    return () => {
+      if (carouselRef.current) {
+        observer.unobserve(carouselRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <div ref={carouselRef}>
+      <Carousel
+        autoPlay={isVisible} // Solo se mueve si es visible
+        infiniteLoop
+        interval={3000} // Cambia cada 3 segundos
+        showThumbs={false}
+        showStatus={false}
+        showArrows={false}
+        transitionTime={2000} // Animación fluida
+        showIndicators={false}
+      >
+        {Productos.map((producto) => (
+          <div key={producto.id} className="Carrusel">
+            <img className="img" src={producto.img} alt="" />
+            <p className="legend">{producto.name}</p>
+          </div>
+        ))}
+      </Carousel>
+    </div>
+  );
 };
 
-export default DemoCarousel
+export default DemoCarousel;
