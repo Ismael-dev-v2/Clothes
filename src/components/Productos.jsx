@@ -1,6 +1,7 @@
 import "./Productos.css";
 import {faCartPlus} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect,useState } from "react";
 
 
 function Stock({ addToCart, filteredProductos, activeProducts }) {

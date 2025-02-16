@@ -12,12 +12,49 @@
     display: flex;
     height: 50px;
     background-color: #F5F5F5;
-    padding: 10px 10px 0 0;
-    justify-content: end;
+    padding: 10px;
+    align-items: center;
+    justify-content: space-between;
     position: sticky;
     top: 0;
     z-index: 40;
 }
+
+
+/* Botón hamburguesa */
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    gap: 4px;
+    z-index: 2; /* Para que quede por encima del menú */
+  }
+  
+  /* Cada línea del ícono */
+  .line {
+    width: 26px;
+    height: 3px;
+    background-color: #333;
+    transition: all 0.3s;
+  }
+
+  /* Transformaciones para el estado "open" */
+/* Primera línea: se mueve hacia abajo y rota 45° */
+.hamburger.open .line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  
+  /* Segunda línea: se desvanece */
+  .hamburger.open .line:nth-child(2) {
+    opacity: 0;
+  }
+  
+  /* Tercera línea: se mueve hacia arriba y rota -45° */
+  .hamburger.open .line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
 
 
 .hidden-cart {
@@ -65,14 +102,21 @@
 
 
 .categoria {
-    justify-content: center;
-    margin: 0 auto;
-    position: sticky;
-    top: 0;
-    text-align: center;
-    overflow: auto;
-    z-index: 40;
+    display: flex;
+    gap: 10;
+    position: relative;
+    left: -100%;
+    opacity: 0;
+    transition: 0.3s ease-in;
+    width: 0px;
+}
+
+.Desploy {
+    position: relative;
+    left: 0;
+    transition: 0.3s ease-in;
     width: fit-content;
+    opacity: 1;
 }
 
 /* .categoria button {
@@ -100,14 +144,25 @@
 @media (max-width: 900px) {
 
     .categoria {
-        text-align: left;
-        justify-content: flex-start;
-        font-size: 14px;
-        margin: 5px;
+        height: fit-content;
+        width: fit-content;
+        padding: 10px;
+        background-color: #f5f5f5;
+        flex-direction: column;
+        position: absolute;
+        top: 50px;
+        left: -100%;
+    }
+
+    .Desploy {
+        position: absolute;
+        width: fit-content;
+        height: fit-content;
+        left: 0;
+        top: 50px;
     }
 
     .btn-categoria {
-        margin: 15px 5px 5px 5px;
         text-align: start;
     }
 

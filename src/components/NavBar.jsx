@@ -1,11 +1,11 @@
-const NavBar = ({ Productos, filterCategory }) => {
+const NavBar = ({ Productos, filterCategory, isOpen }) => {
   // Obtener todas las categorías únicas de los productos
   const uniqueCategories = Array.from(
     new Set(Productos.flatMap((producto) => producto.categoria.flat()))
   );
 
   return (
-    <div className="categoria">
+    <div className={`categoria ${isOpen ? "Desploy" : ""}`}>
       {uniqueCategories.map((categoria) => (
         <button
           type="button"
